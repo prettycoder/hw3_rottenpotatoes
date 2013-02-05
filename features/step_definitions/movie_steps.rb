@@ -22,10 +22,33 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   end
 end
 
-Then /^I should (not )?see movies with the following ratings: (.*)$/ do |negative, rating_list|
-  ratings = "^(" + rating_list.gsub(/[,\s]/, ',' => '|') + ")$"
-  listed_ratings = all('table tbody tr td[2]')
-  listed_ratings.each do |rating|
-    negative ? rating.text.should_not(match(ratings)) : rating.text.should(match(ratings))
+When /^I (un)?check all ratings$/ do |uncheck|
+  page.all('form input[@type="checkbox"]').each do |input|
+    uncheck ? input.set(false) : input.set(true)
   end
- end
+end
+
+When /^I refresh$/ do
+  click_button "ratings_submit"
+end
+
+Then /^I should see no movies with the following ratings: (.*)$/ do |rating_list|
+  ratings = "^(" + rating_list.gsub(/[,\s]/, ',' => '|') + ")$"
+  all('table tbody tr td[2]').each { |rating| rating.text.should_not(match(ratings)) }
+end
+
+Then /^I should see all movies with the following ratings: (.*)$/ do |rating_list|
+  ratings = rating_list.split(', ')
+  listed = all('table tbody tr td[2]')
+
+  listed.each { |l| ratings.include?(l.text).should == true}
+  listed.length.should == Movie.find_all_by_rating(ratings).length
+end
+
+Then /^I should see all movies$/ do
+  all('table tbody tr').count.should == Movie.all.count
+end
+
+Then /^The movie "(.*?)" should be listed before the movie "(.*?)"$/ do |first_movie, second_movie|
+  page.body.index(first_movie).should < page.body.index(second_movie)
+end
