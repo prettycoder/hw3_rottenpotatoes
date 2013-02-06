@@ -6,15 +6,6 @@ Given /the following movies exist/ do |movies_table|
   end
 end
 
-# Make sure that one string (regexp) occurs before or after another one
-#   on the same page
-
-Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
-  #  ensure that that e1 occurs before e2.
-  #  page.body is the entire content of the page as a string.
-  flunk "Unimplemented"
-end
-
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   ratings = rating_list.split(', ')
   ratings.each do |rating|
@@ -51,4 +42,11 @@ end
 
 Then /^The movie "(.*?)" should be listed before the movie "(.*?)"$/ do |first_movie, second_movie|
   page.body.index(first_movie).should < page.body.index(second_movie)
+end
+
+Then /^the director of "(.*?)" should be "(.*?)"$/ do |movie, director|
+  page.should have_content(movie)
+  within("#details") do
+   page.should have_content("Director: " + director)
+  end
 end
