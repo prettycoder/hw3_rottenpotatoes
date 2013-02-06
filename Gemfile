@@ -16,10 +16,12 @@ group :development, :test do
   gem 'pry'
   gem 'zeus'
 end
+
 group :test do
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', "~> 1.0", require: false
   gem 'cucumber-rails-training-wheels'
 end
+
 group :production do
 #  gem 'pg'
 end
@@ -41,5 +43,4 @@ gem 'jquery-rails'
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger
 gem 'haml'
