@@ -8,3 +8,4 @@ db/*.sqlite3
 db/development.sqlite3
 tmp/
 features.tar.gz
+hw4.tar.gz
