@@ -25,13 +25,12 @@ end
 
 Then /^I should see no movies with the following ratings: (.*)$/ do |rating_list|
   ratings = "^(" + rating_list.gsub(/[,\s]/, ',' => '|') + ")$"
-  all('table tbody tr td[2]').each { |rating| rating.text.should_not(match(ratings)) }
+  all('table tbody tr td[3]').each { |rating| rating.text.should_not(match(ratings)) }
 end
 
 Then /^I should see all movies with the following ratings: (.*)$/ do |rating_list|
   ratings = rating_list.split(', ')
-  listed = all('table tbody tr td[2]')
-
+  listed = all('table tbody tr td[3]')
   listed.each { |l| ratings.include?(l.text).should == true}
   listed.length.should == Movie.find_all_by_rating(ratings).length
 end
@@ -47,6 +46,6 @@ end
 Then /^the director of "(.*?)" should be "(.*?)"$/ do |movie, director|
   page.should have_content(movie)
   within("#details") do
-   page.should have_content("Director: " + director)
+    page.should have_content("Director: " + director)
   end
 end

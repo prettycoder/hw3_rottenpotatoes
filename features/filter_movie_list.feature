@@ -28,11 +28,11 @@ Feature: display list of movies filtered by MPAA rating
     # enter step(s) to ensure that PG and R movies are visible
     # enter step(s) to ensure that other movies are not visible
     When I check the following ratings: PG, R
-    And I uncheck the following ratings: G, PG-13
+    And I uncheck the following ratings: G, PG-13, NC-17
     And I refresh
 
     Then I should see all movies with the following ratings: PG, R
-    And I should see no movies with the following ratings: G, PG-13, NV-17
+    And I should see no movies with the following ratings: G, PG-13, NC-17
 
   Scenario: no ratings selected
     When I uncheck all ratings
