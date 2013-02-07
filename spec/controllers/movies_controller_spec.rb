@@ -2,6 +2,18 @@ require 'spec_helper'
 
 describe MoviesController do
 
+  describe '.create' do
+    describe 'with valid params' do
+      let(:movie) { stub_model(Movie) }
+
+      it 'should call create!' do
+        Movie.should_receive(:create!).and_return(movie)
+
+        post :create
+      end
+    end
+  end
+
   describe '.similar' do
     let(:movie) { stub_model(Movie) }
 

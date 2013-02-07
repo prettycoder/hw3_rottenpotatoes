@@ -15,6 +15,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'pry'
   gem 'zeus'
+  gem 'simplecov', :require => false
 end
 
 group :test do
